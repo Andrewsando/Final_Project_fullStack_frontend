@@ -1,1 +1,1 @@
-Proyecto final Full stack
+Proyecto final Full stack Frontend
