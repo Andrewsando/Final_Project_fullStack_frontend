@@ -1,0 +1,96 @@
+<div class="p-6">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
+  
+  <!-- Sección de bienvenida -->
+  <div class="bg-white p-6 rounded-lg shadow mb-8">
+    <p class="text-gray-600 text-2xl font-bold">Welcome <span class="text-green-500">{{ firstName }}!</span></p>
+  </div>
+
+  <!-- Sección de proyectos -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b border-gray-200">
+      <h2 class="text-xl font-semibold text-gray-800">Your work</h2>
+      <div class="flex space-x-6 mt-4 border-b">
+        <button class="pb-2 border-b-2 border-green-500 text-green-600 font-medium">Assigned to me</button>
+        <button class="pb-2 text-gray-500 hover:text-gray-700">Recently viewed</button>
+        <button class="pb-2 text-gray-500 hover:text-gray-700">My issues</button>
+      </div>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="isLoadingProjects" class="p-6 text-center">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+      <p class="mt-2 text-gray-600">Loading projects...</p>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="projectsError && !isLoadingProjects" class="p-6 text-center">
+      <div class="text-red-600 mb-4">
+        <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+        </svg>
+      </div>
+      <p class="text-gray-600">{{ projectsError }}</p>
+      <button (click)="loadUserProjects()" class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+        Retry
+      </button>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!isLoadingProjects && !projectsError && projects.length === 0" class="p-12 text-center">
+      <div class="text-gray-400 mb-4">
+        <svg class="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">There's no projects assigned to you yet</h3>
+      <p class="text-gray-600">You have no projects assigned at this time.</p>
+    </div>
+
+    <!-- Projects table -->
+    <div *ngIf="!isLoadingProjects && !projectsError && projects.length > 0" class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">State</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" *ngIf="projects[0]?.priority">Priority</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" *ngIf="projects[0]?.assignee">Assignee</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" *ngIf="projects[0]?.due_date">Due Date</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let project of projects" class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
+              {{ project.id }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              {{ project.name }}
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900">
+              {{ project.description }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span [class]="getStatusClass(project.state)" class="inline-flex px-2 py-1 text-xs font-semibold rounded-full">
+                {{ project.state }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap" *ngIf="project.priority">
+              <span [class]="getPriorityClass(project.priority)" class="inline-flex px-2 py-1 text-xs font-semibold rounded-full">
+                {{ project.priority }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" *ngIf="project.assignee">
+              {{ project.assignee }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" *ngIf="project.due_date">
+              {{ project.due_date }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

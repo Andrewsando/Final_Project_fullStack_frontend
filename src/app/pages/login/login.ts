@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LoginRequest, LoginResponse } from '../../interfaces/login';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './login.html',
 })
 export class Login {
@@ -31,13 +32,21 @@ export class Login {
       this.isLoading = true;
       this.errorMessage = '';
       
-      this.loginService.login(this.loginForm.value).subscribe({
-        next: (res) => {
+      const loginData: LoginRequest = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value
+      };
+      
+      this.loginService.login(loginData).subscribe({
+        next: (response: LoginResponse) => {
           this.isLoading = false;
-          // Guardar token si el backend lo devuelve
-          if (res.token) {
-            localStorage.setItem('token', res.token);
+          // Guardar tokens JWT
+          if (response.tokens) {
+          localStorage.setItem('access_token', response.tokens.access);
+          localStorage.setItem('refresh_token', response.tokens.refresh);
           }
+          // Guardar información del usuario
+          localStorage.setItem('user', JSON.stringify(response.user));
           // Redirigir al home
           this.router.navigate(['']); 
         },
@@ -45,11 +54,11 @@ export class Login {
           this.isLoading = false;
           // Mostrar mensaje de error específico
           if (err.status === 401) {
-            this.errorMessage = 'Incorrect credentials';
+            this.errorMessage = 'Credenciales incorrectas';
           } else if (err.status === 404) {
-            this.errorMessage = 'User not found';
+            this.errorMessage = 'Usuario no encontrado';
           } else {
-            this.errorMessage = 'Server error. Please try again later.';
+            this.errorMessage = 'Error del servidor. Intenta más tarde.';
           }
         },
       });
