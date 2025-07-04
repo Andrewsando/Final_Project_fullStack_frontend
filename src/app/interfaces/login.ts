@@ -77,6 +77,7 @@ export interface Project {
   name: string;
   description: string;
   state: string;
+  user: number;
   priority?: string;
   assignee?: string;
   due_date?: string;
@@ -86,6 +87,14 @@ export interface Project {
 
 export interface ProjectsResponse {
   projects: Project[];
+}
+
+// Create project request interface
+export interface CreateProjectRequest {
+  name: string;
+  description: string;
+  state: string;
+  user: number;
 }
 
 // Profile interfaces
