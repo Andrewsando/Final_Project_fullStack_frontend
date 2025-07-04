@@ -1,33 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Project, ProjectsResponse } from '../interfaces/login';
+import { Project, ProjectsResponse, CreateProjectRequest } from '../interfaces/login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
-  private apiUrl = 'http://localhost:8000/api/projects';
+  private readonly baseUrl = 'http://localhost:8000/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getUserProjects(): Observable<ProjectsResponse> {
-    const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+  getUserProjects(): Observable<Project[]> {
+    const user = this.getCurrentUser();
+    
+    if (!user?.id) {
+      throw new Error('User ID not found');
+    }
 
-    return this.http.get<ProjectsResponse>(`${this.apiUrl}/user-projects/`, { headers });
+    const headers = this.getAuthHeaders();
+    return this.http.get<Project[]>(`${this.baseUrl}/project/user/${user.id}/`, { headers });
   }
 
   getAllProjects(): Observable<ProjectsResponse> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<ProjectsResponse>(`${this.baseUrl}/projects/`, { headers });
+  }
+
+  createProject(projectData: CreateProjectRequest): Observable<Project> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<Project>(`${this.baseUrl}/project/`, projectData, { headers });
+  }
+
+  private getCurrentUser() {
+    try {
+      return JSON.parse(localStorage.getItem('user') || '{}');
+    } catch {
+      return null;
+    }
+  }
+
+  private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('access_token');
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-
-    return this.http.get<ProjectsResponse>(`${this.apiUrl}/`, { headers });
   }
 }
