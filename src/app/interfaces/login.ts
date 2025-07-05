@@ -34,7 +34,7 @@ export interface ErrorResponse {
 
 // Create user request interface
 export interface CreateUserRequest {
-  name: string;
+  username: string;
   password: string;
   email: string;
 }
@@ -42,7 +42,7 @@ export interface CreateUserRequest {
 // Register response interface
 export interface RegisterResponse {
   id: number;
-  name: string;
+  username: string;
   email: string;
 }
 
