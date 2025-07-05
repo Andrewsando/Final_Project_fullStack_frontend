@@ -81,10 +81,13 @@ export class Register {
       const email = this.registerForm.get('email')?.value;
       
       const registerData: CreateUserRequest = {
-        name: fullName,
+        username: fullName,
         password: this.registerForm.get('password')?.value,
         email: email
       };
+      
+      console.log('Register data being sent:', registerData);
+      console.log('Register data keys:', Object.keys(registerData));
       
       this.registerService.createUser(registerData).subscribe({
         next: (response: RegisterResponse) => {
@@ -95,8 +98,20 @@ export class Register {
         },
         error: (err) => {
           this.isLoading = false;
+          console.error('Registration error:', err);
+          console.error('Error details:', {
+            status: err.status,
+            message: err.message,
+            error: err.error
+          });
           
           let backendMessage = '';
+          
+          // Si el error menciona 'username', es porque el backend espera ese campo
+          if (err.error && typeof err.error === 'string' && err.error.includes('username')) {
+            this.errorMessage = 'Backend configuration error: unexpected username field. Please contact support.';
+            return;
+          }
           
           if (err.error) {
             // Si hay errores específicos de validación
@@ -109,8 +124,8 @@ export class Register {
                 errorMessages.push(`Email: ${errors.email[0]}`);
               }
               
-              if (errors.name && Array.isArray(errors.name)) {
-                errorMessages.push(`Name: ${errors.name[0]}`);
+              if (errors.username && Array.isArray(errors.username)) {
+                errorMessages.push(`Username: ${errors.username[0]}`);
               }
               
               if (errors.password && Array.isArray(errors.password)) {
@@ -119,7 +134,7 @@ export class Register {
               
               // Si hay otros campos de error, agregarlos también
               Object.keys(errors).forEach(field => {
-                if (!['email', 'name', 'password'].includes(field) && Array.isArray(errors[field])) {
+                if (!['email', 'username', 'password'].includes(field) && Array.isArray(errors[field])) {
                   errorMessages.push(`${field}: ${errors[field][0]}`);
                 }
               });
