@@ -56,34 +56,30 @@ export const routes: Routes = [
                 component: Dashboard // Temporal
             },
             {
-                path: 'filters',
-                component: Dashboard // Temporal
-            },
-            {
-                path: 'panels',
-                component: Dashboard // Temporal
-            },
-            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
+            },
+            {
+
+                path: 'user-history',
+                component: HulistComponent,
+            },
+            {
+                path: 'tasks',
+                component: TasksComponent
             }
         ]
     },
     {
-        path: '**',
-        redirectTo: '/login'
-
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
     },
     {
+        path: '**',
+        redirectTo: '/dashboard'
+    },
 
-    path: 'historias-usuario',
-    component: HulistComponent,
-  },
-  {
-        path: 'tasks',
-        component: TasksComponent,
-        canActivate: [NoAuthGuard]
-    }
 
 ];

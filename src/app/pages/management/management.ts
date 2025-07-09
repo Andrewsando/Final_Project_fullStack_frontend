@@ -30,6 +30,7 @@ export class Management {
       }
     })
   }
+
   deleteProject(event:any, projectId:number){
     if(confirm("Are you sure you want to delete this project?")) {
       event.target.innerText = "Deleting...";
@@ -41,5 +42,15 @@ export class Management {
          window.location.reload();
       })
     }
+
+  
+  formatStatus(state: string): string {
+    const statusMap: { [key: string]: string } = {
+      'active': 'Active',
+      'in_progress': 'In Progress',
+      'closed': 'Closed'
+    };
+    
+    return statusMap[state] || state;
   }
 }

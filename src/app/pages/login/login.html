@@ -4,12 +4,10 @@
   </div>
     <div class="absolute top-14 left-0 w-full h-px bg-gray-300"></div>
   <div class="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
-    <!-- Formulario de login -->
     <div class="w-full md:w-2/3 p-8 flex flex-col justify-center">
       <h2 class="text-2xl font-bold mb-6 text-center  text-gray-600 self-center flex">Welcome to <span class="text-green-500 ml-1"> Trekker</span></ h2>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <!-- Mensaje de error general -->
         <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
           {{ errorMessage }}
         </div>
@@ -63,7 +61,6 @@
       </div>
     </div>
     
-    <!-- Imagen -->
     <div class="md:block md:w-1/3  flex items-center justify-center">
       <img src="image.png" alt="Login Illustration" class="w-60 h-auto rounded-lg float-right" />
     </div>

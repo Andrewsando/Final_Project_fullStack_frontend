@@ -39,7 +39,6 @@ export class Profile implements OnInit {
   }
 
   setupFormChangeListeners(): void {
-    // Limpiar errores al escribir
     this.profileForm.get('name')?.valueChanges.subscribe(() => {
       if (this.fieldErrors['name']) {
         delete this.fieldErrors['name'];
@@ -61,7 +60,6 @@ export class Profile implements OnInit {
 
   loadUserData(): void {
     this.currentUser = this.authService.getCurrentUser();
-    // Formulario vacío para permitir actualizaciones selectivas
     this.profileForm.patchValue({
       name: '',
       email: '',
@@ -122,18 +120,15 @@ export class Profile implements OnInit {
   }
 
   onSubmit(): void {
-    // Obtener valores sin espacios
     const name = this.profileForm.get('name')?.value?.trim() || '';
     const email = this.profileForm.get('email')?.value?.trim() || '';
     const password = this.profileForm.get('password')?.value?.trim() || '';
     
-    // Validación: al menos un campo debe estar completado
     if (!name && !email && !password) {
       this.errorMessage = 'Please fill at least one field to update your profile.';
       return;
     }
     
-    // Validar campos individuales si se proporcionan
     if (email && this.profileForm.get('email')?.invalid) {
       this.errorMessage = 'Please enter a valid email address.';
       return;
@@ -151,7 +146,6 @@ export class Profile implements OnInit {
 
     const updateData: UpdateProfileRequest = {};
 
-    // Solo incluir campos con contenido
     if (name && name.length > 0) {
       updateData.name = name;
     }
@@ -194,7 +188,6 @@ export class Profile implements OnInit {
         window.dispatchEvent(new CustomEvent('userUpdated', { 
           detail: { updatedFields: Object.keys(updateData) }
         }));
-        // Limpiar campo de contraseña
         this.profileForm.patchValue({ password: '' });
         
         setTimeout(() => {

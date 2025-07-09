@@ -20,7 +20,6 @@ export class AuthService {
   getUserFullName(): string {
     const user = this.getCurrentUser();
     if (user) {
-      // Usar el campo name si está disponible, sino usar first_name y last_name
       return user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim();
     }
     return 'Usuario';
