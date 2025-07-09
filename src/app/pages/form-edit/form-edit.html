@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div class="container p-6 flex items-center justify-center">
+  <form (ngSubmit)="updateProjectData()" class="p-4 bg-white shadow-md rounded-lg w-full max-w-md">
+    <div class="py-4 border-b-1 border-gray-300 mb-4">
+      <h2 class="font-bold text-2xl">Edit Project</h2>
+    </div>
+    <div class="p2">
+      <label for="name" class="pb-4 mb-5">Project Name *</label>
+      <input [(ngModel)]="project.name" type="text"  name="name" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
+    </div>
+     <div class="p2">
+      <label for="description" class="pb-4 mb-5">Description *</label>
+      <input [(ngModel)]="project.description" type="text"  name="description" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
+    </div>
+    <div class="p2">
+      <label for="status" class="pb-4 mb-5">status *</label>
+      <input [(ngModel)]="project.state" type="text" id="description" name="status" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
+    </div>
+    <div class="p2">
+      <label for="status" class="pb-4 mb-5">user *</label>
+      <input [(ngModel)]="project.user" type="text" id="description" name="user" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
+    </div>
+    <div class="p2">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+ Save Changes
+      </button>
+      <button routerLink="/management" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 border border-gray-700 rounded ml-2">
+        Cancel
+</button>
+    </div>
+  </form>
+</div>
