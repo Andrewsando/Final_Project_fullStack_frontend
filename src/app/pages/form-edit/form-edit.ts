@@ -14,14 +14,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class FormEdit { 
   projectId!: any;
-  project: any;
-  loading: boolean = true;
+  project!: any;
+
+  loading: boolean = false;
+  loadingTitle: string = "Loading project data...";
+  errors: any = [];
   
   constructor(private route: ActivatedRoute, private editProject: ManagmentServices) { }
 
   ngOnInit() {
     this.projectId = this.route.snapshot.paramMap.get('id');
-
+    
+    this.loading = true;
     this.editProject.editProject(this.projectId).subscribe(
       res => {
         this.project = res;
@@ -30,19 +34,27 @@ export class FormEdit {
     )
   }
   updateProjectData(){
-    var data:any = {
+    var inputNewData  = {
+      id : this.project.id,
       name: this.project.name,
       description: this.project.description,
-      status: this.project.state,
-      user: this.project.user
-    };
-    this.editProject.saveEditProject(data, this.projectId).subscribe({
-      next:(res:any)=>{
-        console.log('Project updated successfully:', res);
+      state: this.project.state,
+      user: this.project.user,
+    }
+     this.loading = true;
+
+
+    this.editProject.saveEditProject(this.projectId, inputNewData).subscribe({
+      next:(res)=>{
+        console.log("editado correctamente", res);
+        alert(res);
+        this.loading = false;
       },
-      error:(err:any)=>{
-        console.error('Error updating project:', err);
+      error:(err)=>{
+        console.log(err);
+        this.errors = err.error;
+        this.loading = false;
       }
-    })
+    });
   }
 }
