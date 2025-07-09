@@ -9,6 +9,8 @@ import { AuthGuard } from './guards/auth-guard';
 import { NoAuthGuard } from './guards/no-auth-guard';
 import { FormEdit } from './pages/form-edit/form-edit';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { HulistComponent } from './pages/hulist/hulist';
+
 
 export const routes: Routes = [
     {
@@ -78,8 +80,14 @@ export const routes: Routes = [
 
     },
     {
+
+    path: 'historias-usuario',
+    component: HulistComponent,
+  },
+  {
         path: 'tasks',
         component: TasksComponent,
         canActivate: [NoAuthGuard]
     }
+
 ];
