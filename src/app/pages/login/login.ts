@@ -27,7 +27,7 @@ export class Login {
     });
     
     // Test backend connectivity on component load
-    this.testBackendConnection();
+    //this.testBackendConnection();
   }
 
   testBackendConnection() {

@@ -64,10 +64,6 @@ export const routes: Routes = [
                 component: Dashboard // Temporal
             },
             {
-                path: 'schedules',
-                component: Dashboard // Temporal
-            },
-            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'

@@ -1,32 +1,100 @@
 <app-header></app-header>
-<div class="container p-6 flex items-center justify-center">
-  <form (ngSubmit)="updateProjectData()" class="p-4 bg-white shadow-md rounded-lg w-full max-w-md">
-    <div class="py-4 border-b-1 border-gray-300 mb-4">
-      <h2 class="font-bold text-2xl">Edit Project</h2>
+
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg border border-gray-200 p-8">
+      
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-light text-gray-900">Edit Project</h1>
+      </div>
+      
+      <form (ngSubmit)="updateProjectData()" class="space-y-6">
+        
+        <!-- Project Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+            Project Name *
+          </label>
+          <input 
+            [(ngModel)]="project.name" 
+            type="text" 
+            name="name" 
+            id="name"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+            placeholder="project test">
+        </div>
+        
+        <!-- Description -->
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+            Description *
+          </label>
+          <input 
+            [(ngModel)]="project.description" 
+            type="text" 
+            name="description" 
+            id="description"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+            placeholder="test">
+        </div>
+        
+        <!-- Status -->
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+            Status *
+          </label>
+          <div class="relative">
+            <select 
+              [(ngModel)]="project.state" 
+              name="status" 
+              id="status"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 appearance-none">
+              <option value="">Select a status</option>
+              <option value="active">Active</option>
+              <option value="in_progress">In Progress</option>
+              <option value="closed">Closed</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <!-- User -->
+        <div>
+          <label for="user" class="block text-sm font-medium text-gray-700 mb-2">
+            Assigned User
+          </label>
+          <input 
+            type="text" 
+            name="user" 
+            id="user"
+            [value]="project?.user || '7'"
+            readonly
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 cursor-not-allowed">
+          <p class="text-sm text-gray-500 mt-2">The assigned user cannot be modified</p>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4 pt-6">
+          <button 
+            type="button"
+            routerLink="/management" 
+            class="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors font-medium">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">
+            Save
+          </button>
+        </div>
+        
+      </form>
+      
     </div>
-    <div class="p2">
-      <label for="name" class="pb-4 mb-5">Project Name *</label>
-      <input [(ngModel)]="project.name" type="text"  name="name" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
-    </div>
-     <div class="p2">
-      <label for="description" class="pb-4 mb-5">Description *</label>
-      <input [(ngModel)]="project.description" type="text"  name="description" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
-    </div>
-    <div class="p2">
-      <label for="status" class="pb-4 mb-5">status *</label>
-      <input [(ngModel)]="project.state" type="text" id="description" name="status" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
-    </div>
-    <div class="p2">
-      <label for="status" class="pb-4 mb-5">user *</label>
-      <input [(ngModel)]="project.user" type="text" id="description" name="user" class="border p-2 rounded w-full mt-4 mb-4" placeholder="">
-    </div>
-    <div class="p2">
-      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
- Save Changes
-      </button>
-      <button routerLink="/management" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 border border-gray-700 rounded ml-2">
-        Cancel
-</button>
-    </div>
-  </form>
+  </div>
 </div>
