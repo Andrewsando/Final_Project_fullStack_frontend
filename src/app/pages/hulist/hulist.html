@@ -1,0 +1,46 @@
+<div class="contain-content w-10/12 mt-20 align-middle mx-auto">
+<h1 class="font-bold text-3xl text-blue-300">Tablero de HUs</h1>
+<p>Visualiza y gestiona las historias de usuario</p>
+
+
+  <!-- Botón Crear -->
+  <div class="text-right my-4">
+    <button (click)="crearHistoria()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">
+      Crear Historia
+    </button>
+  </div>
+
+  <!-- Formulario -->
+  <div *ngIf="mostrarFormulario" class="mb-6 p-4 border rounded-xl bg-white shadow-md">
+    <form (ngSubmit)="guardarHistoria()" #formulario="ngForm">
+      <div class="mb-3">
+        <label>Título:</label>
+        <input [(ngModel)]="nuevaHistoria.title" name="title" required class="border p-2 w-full rounded" />
+      </div>
+
+      <div class="mb-3">
+        <label>Descripción:</label>
+        <textarea [(ngModel)]="nuevaHistoria.description" name="description" required class="border p-2 w-full rounded"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label>Estado:</label>
+        <select [(ngModel)]="nuevaHistoria.state" name="state" class="border p-2 w-full rounded">
+          <option value="to_do">To Do</option>
+          <option value="in_progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+
+      <div class="flex justify-end gap-4 mt-3">
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
+        <button type="button" (click)="mostrarFormulario = false" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de tarjetas -->
+  <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <app-listcards *ngFor="let historia of historias" [historia]="historia"></app-listcards>
+  </div>
+

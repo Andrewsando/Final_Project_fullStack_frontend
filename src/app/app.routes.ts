@@ -6,6 +6,7 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { Profile } from './pages/profile/profile';
 import { AuthGuard } from './guards/auth-guard';
 import { NoAuthGuard } from './guards/no-auth-guard';
+import { HulistComponent } from './pages/hulist/hulist';
 
 export const routes: Routes = [
     {
@@ -58,5 +59,9 @@ export const routes: Routes = [
         path: '**',
         redirectTo: '/login'
 
-    }
+    },
+    {
+    path: 'historias-usuario',
+    component: HulistComponent,
+  },
 ];
