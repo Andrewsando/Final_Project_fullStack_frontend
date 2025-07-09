@@ -40,7 +40,7 @@ export class LoginService {
     if (error.status === 0) {
       console.error('Network error - server might be down or CORS issue');
     } else if (error.status === 404) {
-      console.error('Endpoint not found - check if /api/users/login/ exists');
+      console.error(`Endpoint not found - check if ${error.url} exists`);
     } else if (error.status >= 400 && error.status < 500) {
       console.error('Client error:', error.status);
     } else if (error.status >= 500) {
