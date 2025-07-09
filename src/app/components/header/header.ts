@@ -104,6 +104,7 @@ export class HeaderComponent {
         this.isLoading = false;
         this.closeCreateProjectModal();
         this.notifyProjectCreated(response);
+        window.location.reload();
       },
       error: (error) => {
         this.isLoading = false;
