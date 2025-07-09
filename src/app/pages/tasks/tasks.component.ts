@@ -59,4 +59,32 @@ export class TasksComponent {
       this.tasks[i].file = file;
     }
   }
+
+  getStatusClass(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      'to do': 'bg-gray-100 text-gray-800',
+      'in progress': 'bg-blue-100 text-blue-800',
+      'done': 'bg-green-100 text-green-800',
+      'completed': 'bg-green-100 text-green-800',
+      'pending': 'bg-orange-100 text-orange-800',
+      'cancelled': 'bg-red-100 text-red-800'
+    };
+
+    return statusMap[status?.toLowerCase()] || 'bg-gray-100 text-gray-800';
+  }
+
+  formatStatus(status: string): string {
+    // El status ya viene formateado correctamente desde tasks ('To Do', 'In Progress', 'Done')
+    // pero podemos asegurarnos de que sea consistente
+    const statusMap: { [key: string]: string } = {
+      'to do': 'To Do',
+      'in progress': 'In Progress', 
+      'done': 'Done',
+      'completed': 'Completed',
+      'pending': 'Pending',
+      'cancelled': 'Cancelled'
+    };
+    
+    return statusMap[status?.toLowerCase()] || status;
+  }
 }

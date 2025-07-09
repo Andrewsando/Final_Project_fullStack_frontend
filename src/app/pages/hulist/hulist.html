@@ -1,46 +1,87 @@
-<div class="contain-content w-10/12 mt-20 align-middle mx-auto">
-<h1 class="font-bold text-3xl text-blue-300">Tablero de HUs</h1>
-<p>Visualiza y gestiona las historias de usuario</p>
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-light text-gray-900">User Stories</h1>
+      <p class="mt-2 text-sm text-gray-600">View and manage user stories</p>
+    </div>
 
+    <!-- Create Button -->
+    <div class="flex justify-end mb-6">
+      <button (click)="crearHistoria()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium">
+        Create Story
+      </button>
+    </div>
 
-  <!-- Botón Crear -->
-  <div class="text-right my-4">
-    <button (click)="crearHistoria()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">
-      Crear Historia
-    </button>
+    <!-- Form -->
+    <div *ngIf="mostrarFormulario" class="mb-8 bg-white rounded-lg border border-gray-200 p-6">
+      <div class="mb-6">
+        <h2 class="text-lg font-medium text-gray-900">Create New User Story</h2>
+      </div>
+      
+      <form (ngSubmit)="guardarHistoria()" #formulario="ngForm" class="space-y-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <input 
+            [(ngModel)]="nuevaHistoria.title" 
+            name="title" 
+            required 
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter story title" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <textarea 
+            [(ngModel)]="nuevaHistoria.description" 
+            name="description" 
+            required 
+            rows="4"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+            placeholder="Describe the user story..."></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+          <div class="relative">
+            <select 
+              [(ngModel)]="nuevaHistoria.state" 
+              name="state" 
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white appearance-none">
+              <option value="to_do">To Do</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-4 pt-4">
+          <button 
+            type="button" 
+            (click)="mostrarFormulario = false" 
+            class="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors font-medium">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Stories Grid -->
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <app-listcards *ngFor="let historia of historias" [historia]="historia"></app-listcards>
+    </div>
+    
   </div>
-
-  <!-- Formulario -->
-  <div *ngIf="mostrarFormulario" class="mb-6 p-4 border rounded-xl bg-white shadow-md">
-    <form (ngSubmit)="guardarHistoria()" #formulario="ngForm">
-      <div class="mb-3">
-        <label>Título:</label>
-        <input [(ngModel)]="nuevaHistoria.title" name="title" required class="border p-2 w-full rounded" />
-      </div>
-
-      <div class="mb-3">
-        <label>Descripción:</label>
-        <textarea [(ngModel)]="nuevaHistoria.description" name="description" required class="border p-2 w-full rounded"></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label>Estado:</label>
-        <select [(ngModel)]="nuevaHistoria.state" name="state" class="border p-2 w-full rounded">
-          <option value="to_do">To Do</option>
-          <option value="in_progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
-      </div>
-
-      <div class="flex justify-end gap-4 mt-3">
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
-        <button type="button" (click)="mostrarFormulario = false" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Lista de tarjetas -->
-  <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <app-listcards *ngFor="let historia of historias" [historia]="historia"></app-listcards>
-  </div>
+</div>
 

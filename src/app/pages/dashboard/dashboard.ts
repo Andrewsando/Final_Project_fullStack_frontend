@@ -94,6 +94,19 @@ export class Dashboard implements OnInit, OnDestroy {
     return statusMap[state?.toLowerCase()] || 'bg-gray-100 text-gray-800';
   }
 
+  formatStatus(state: string): string {
+    const statusMap: { [key: string]: string } = {
+      'active': 'Active',
+      'in_progress': 'In Progress',
+      'closed': 'Closed',
+      'pending': 'Pending',
+      'completed': 'Completed',
+      'cancelled': 'Cancelled'
+    };
+    
+    return statusMap[state] || state;
+  }
+
   getPriorityClass(priority: string): string {
     const priorityMap: { [key: string]: string } = {
       'high': 'bg-red-100 text-red-800',
