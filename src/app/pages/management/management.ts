@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header';
-import { ManagmentServices } from '../../services/managment-services';
 import { Router, RouterModule } from '@angular/router';
 import { ManagementList } from '../../interfaces/ManagementList';
 import { FormsModule } from '@angular/forms';
+import { ManagmentServices } from '../../services/managment-services';
 
 @Component({
   selector: 'app-management',
   standalone: true,
   imports: [HeaderComponent, CommonModule, RouterModule, FormsModule],
   templateUrl: './management.html',
-  styleUrl: './management.css'
+  styleUrls: ['./management.css'],
 })
 export class Management {
 
@@ -30,5 +30,16 @@ export class Management {
       }
     })
   }
-  
+  deleteProject(event:any, projectId:number){
+    if(confirm("Are you sure you want to delete this project?")) {
+      event.target.innerText = "Deleting...";
+      
+      this.projectServices.destroyProject(projectId).subscribe((res:any)=>{
+        console.log("Project deleted successfully", res);
+        this.projectServices.getManagements();
+        alert("Project deleted successfully");
+         window.location.reload();
+      })
+    }
+  }
 }

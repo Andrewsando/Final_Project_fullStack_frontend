@@ -11,39 +11,47 @@ import { HttpHeaders } from '@angular/common/http';
 
 export class ManagmentServices {
 
-  private apiUrl: string = 'http://localhost:8000/api/';
+  private apiUrl: string = 'http://localhost:8000/api/project/';
 
   constructor(private readonly http: HttpClient) {}
 
   getManagements(): Observable<ManagementList[]> {
     const token = localStorage.getItem('access_token');
-    return this.http.get<ManagementList[]>(`${this.apiUrl}project/`, {
+    return this.http.get<ManagementList[]>(`${this.apiUrl}`, {
       headers:{
         'Authorization': `Bearer ${token}`,
       }
     })
   }
 
-  editProject(id:number): Observable<ManagementList[]> {
+  editProject(projectId:number): Observable<ManagementList[]> {
     const token = localStorage.getItem('access_token');
-    return this.http.get<ManagementList[]>(`${this.apiUrl}project/${id}`, {
+    return this.http.get<ManagementList[]>(`${this.apiUrl}${projectId}/`, {
       headers:{
         'Authorization': `Bearer ${token}`,
       }
     })
   }
-  saveEditProject(id: number, projectData: object): Observable<ManagementList[]> {
-  const token = localStorage.getItem('access_token');
-  return this.http.put<ManagementList[]>(
-    `${this.apiUrl}project/${id}`,
-    projectData,  // Aquí van los datos del proyecto a actualizar
-    {
-      headers: {
+
+
+  saveEditProject(projectId: number, inputNewData: any): Observable<ManagementList[]> {
+    const token = localStorage.getItem('access_token');
+    return this.http.put<ManagementList[]>(`${this.apiUrl}${projectId}/`, inputNewData, {
+      headers:{
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
       }
-    }
-  );
-}
+    })
+  }
+
+
+
+  destroyProject(projectId: number): Observable<ManagementList[]> {
+    const token = localStorage.getItem('access_token');
+    return this.http.delete<ManagementList[]>(`${this.apiUrl}${projectId}/`, {
+      headers:{
+        'Authorization': `Bearer ${token}`,
+      }
+    })
+  }
 }
 
