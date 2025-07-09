@@ -8,6 +8,7 @@ import { Management } from './pages/management/management';
 import { AuthGuard } from './guards/auth-guard';
 import { NoAuthGuard } from './guards/no-auth-guard';
 import { FormEdit } from './pages/form-edit/form-edit';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 export const routes: Routes = [
     {
@@ -76,4 +77,9 @@ export const routes: Routes = [
         redirectTo: '/login'
 
     },
+    {
+        path: 'tasks',
+        component: TasksComponent,
+        canActivate: [NoAuthGuard]
+    }
 ];
