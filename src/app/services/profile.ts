@@ -36,7 +36,6 @@ export class ProfileService {
       'Content-Type': 'application/json'
     });
 
-    // Solo enviar campos con valores
     const filteredData: any = {};
     
     if (userData.name && typeof userData.name === 'string' && userData.name.trim().length > 0) {

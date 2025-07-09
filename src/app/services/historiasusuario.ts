@@ -11,7 +11,7 @@ export interface HistoriaUsuario {
 
 @Injectable({ providedIn: 'root' })
 export class HistoriasUsuarioService {
-  private apiUrl = 'http://localhost:8000/api/userstories/';  // Ajusta según tu backend
+  private apiUrl = 'http://localhost:8000/api/userstories/';
 
   constructor(private http: HttpClient) {}
 

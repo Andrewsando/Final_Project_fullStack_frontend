@@ -25,9 +25,6 @@ export class Login {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
-    
-    // Test backend connectivity on component load
-    //this.testBackendConnection();
   }
 
   testBackendConnection() {
@@ -67,24 +64,20 @@ export class Login {
             return;
           }
           
-          // Manejar diferentes estructuras de respuesta del backend
           let accessToken = null;
           let refreshToken = null;
           let userData = null;
           
-          // Estructura estándar esperada
           if (response.tokens) {
             accessToken = response.tokens.access;
             refreshToken = response.tokens.refresh;
             userData = response.user;
           }
-          // Estructura alternativa - tokens en el nivel superior
           else if (response.access_token || response.access) {
             accessToken = response.access_token || response.access;
             refreshToken = response.refresh_token || response.refresh;
             userData = response.user || response;
           }
-          // Estructura alternativa - user y tokens separados
           else if (response.token || response.access) {
             accessToken = response.token || response.access;
             refreshToken = response.refresh;
