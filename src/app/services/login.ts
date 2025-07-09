@@ -22,7 +22,6 @@ export class LoginService {
       );
   }
 
-  // Test endpoint connectivity
   testConnection(): Observable<any> {
     console.log('Testing connection to:', this.apiUrl);
     return this.http.get<any>(`${this.apiUrl}/`)

@@ -1,4 +1,3 @@
-// User interface
 export interface User {
   id: number;
   email: string;
@@ -11,13 +10,11 @@ export interface User {
   last_login?: string;
 }
 
-// Login request interface
 export interface LoginRequest {
   email: string;
   password: string;
 }
 
-// Login response interface
 export interface LoginResponse {
   message: string;
   user: User;
@@ -27,33 +24,28 @@ export interface LoginResponse {
   };
 }
 
-// Error response interface
 export interface ErrorResponse {
   error: string;
 }
 
-// Create user request interface
 export interface CreateUserRequest {
   username: string;
   password: string;
   email: string;
 }
 
-// Register response interface
 export interface RegisterResponse {
   id: number;
   username: string;
   email: string;
 }
 
-// API Response wrapper
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
   error?: string;
 }
 
-// Auth service interface
 export interface AuthService {
   login(credentials: LoginRequest): Promise<LoginResponse>;
   createUser(userData: CreateUserRequest): Promise<User>;
@@ -63,7 +55,6 @@ export interface AuthService {
   getCurrentUser(): User | null;
 }
 
-// JWT Token payload interface
 export interface JWTPayload {
   user_id: number;
   exp: number;
@@ -71,7 +62,6 @@ export interface JWTPayload {
   token_type: string;
 }
 
-// Interfaces para proyectos
 export interface Project {
   id: number;
   name: string;
@@ -89,7 +79,6 @@ export interface ProjectsResponse {
   projects: Project[];
 }
 
-// Create project request interface
 export interface CreateProjectRequest {
   name: string;
   description: string;
@@ -97,7 +86,6 @@ export interface CreateProjectRequest {
   user: number;
 }
 
-// Profile interfaces
 export interface UpdateProfileRequest {
   name?: string;
   email?: string;
@@ -107,4 +95,16 @@ export interface UpdateProfileRequest {
 export interface UpdateProfileResponse {
   message: string;
   user: User;
+}
+
+export interface HttpResponseEvent {
+  type: number;
+  status: number;
+  body: any;
+  url?: string;
+}
+
+export interface TokenRefreshResponse {
+  access: string;
+  refresh: string;
 }
