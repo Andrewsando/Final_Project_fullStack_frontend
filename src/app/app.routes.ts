@@ -4,10 +4,25 @@ import { Register } from './pages/register/register';
 import { AuthenticatedLayout } from './layouts/authenticated-layout/authenticated-layout';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Profile } from './pages/profile/profile';
+import { Management } from './pages/management/management';
 import { AuthGuard } from './guards/auth-guard';
 import { NoAuthGuard } from './guards/no-auth-guard';
+import { FormEdit } from './pages/form-edit/form-edit';
+import { TasksComponent } from './pages/tasks/tasks.component';
+import { HulistComponent } from './pages/hulist/hulist';
+
 
 export const routes: Routes = [
+    {
+        path: 'form-edit',
+        component: FormEdit,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'form-edit/:id',
+        component: FormEdit,
+        canActivate: [AuthGuard]
+    },
     {
         path: 'login',
         component: Login,
@@ -17,6 +32,11 @@ export const routes: Routes = [
         path: 'register',
         component: Register,
         canActivate: [NoAuthGuard]
+    },
+    {
+        path: 'management',
+        component: Management,
+        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -58,5 +78,16 @@ export const routes: Routes = [
         path: '**',
         redirectTo: '/login'
 
+    },
+    {
+
+    path: 'historias-usuario',
+    component: HulistComponent,
+  },
+  {
+        path: 'tasks',
+        component: TasksComponent,
+        canActivate: [NoAuthGuard]
     }
+
 ];
