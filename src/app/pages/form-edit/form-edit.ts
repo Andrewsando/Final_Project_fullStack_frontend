@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute,  RouterModule, Router } from '@angular/router';
 import { ManagmentServices } from '../../services/managment-services';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-form-edit',
   standalone: true,
-  imports: [FormsModule, HeaderComponent, RouterModule, CommonModule, ],
+  imports: [FormsModule, HeaderComponent, RouterModule, CommonModule],
   templateUrl: './form-edit.html',
   styleUrl: './form-edit.css'
 })
@@ -20,7 +20,7 @@ export class FormEdit {
   loadingTitle: string = "Loading project data...";
   errors: any = [];
   
-  constructor(private route: ActivatedRoute, private editProject: ManagmentServices) { }
+  constructor(private route: ActivatedRoute, private editProject: ManagmentServices, private router: Router) { }
 
   ngOnInit() {
     this.projectId = this.route.snapshot.paramMap.get('id');
@@ -46,9 +46,9 @@ export class FormEdit {
 
     this.editProject.saveEditProject(this.projectId, inputNewData).subscribe({
       next:(res)=>{
-        console.log("editado correctamente", res);
-        alert(res);
+        alert("Editado correctamente");
         this.loading = false;
+        this.router.navigate(['/management']);
       },
       error:(err)=>{
         console.log(err);

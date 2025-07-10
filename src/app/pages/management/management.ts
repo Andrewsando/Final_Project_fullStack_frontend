@@ -42,15 +42,5 @@ export class Management {
          window.location.reload();
       })
     }
-
-  
-  formatStatus(state: string): string {
-    const statusMap: { [key: string]: string } = {
-      'active': 'Active',
-      'in_progress': 'In Progress',
-      'closed': 'Closed'
-    };
-    
-    return statusMap[state] || state;
   }
 }
